@@ -4,8 +4,8 @@ require "open4"
 module RtfParse
   attr_accessor(:text, :err)
 
-  def self.to_text(source)
-    config_path = File.expand_path(File.dirname(__FILE__) + '/../config')
+  def self.to_text(source, options = {})
+    config_path = options[:config_path] || File.expand_path(File.dirname(__FILE__) + '/../config')
     command = "unrtf -P #{config_path} -t text --nopict --quiet"
     rtf = _get_source_content(source)
 
@@ -13,8 +13,8 @@ module RtfParse
     return _clean_header(text)
   end
 
-  def self.to_html(source)
-    config_path = File.expand_path(File.dirname(__FILE__) + '/../config')
+  def self.to_html(source, options = {})
+    config_path = options[:config_path] || File.expand_path(File.dirname(__FILE__) + '/../config')
     command = "unrtf -P #{config_path} -t html --nopict --quiet"
     rtf = _get_source_content(source)
 
